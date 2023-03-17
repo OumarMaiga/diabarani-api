@@ -35,14 +35,12 @@
         }
 
         public function save($inputs) {
-            $req = $this->db->prepare('INSERT INTO series (title, slug, overview, etat, deleted, poster_path, cover_path, user_id, created_at, updated_at)VALUES(:title, :slug, :overview, :etat, :deleted, :poster_path, :cover_path, :user_id, NOW(), null)');
+            $req = $this->db->prepare('INSERT INTO series (title, slug, overview, etat, deleted, user_id, created_at, updated_at)VALUES(:title, :slug, :overview, :etat, :deleted, :user_id, NOW(), null)');
             $req->bindParam(':title', $inputs['title']);
             $req->bindParam(':slug', $inputs['slug']);
             $req->bindParam(':overview', $inputs['overview']);
             $req->bindParam(':etat', $inputs['etat']);
             $req->bindParam(':deleted', $inputs['deleted']);
-            $req->bindParam(':poster_path', $inputs['poster_path']);
-            $req->bindParam(':cover_path', $inputs['cover_path']);
             $req->bindParam(':user_id', $inputs['user_id']);
             $data['success'] = false;
             $data['serie'] = null;
@@ -58,15 +56,13 @@
         }
 
         public function update($id, $inputs) {
-            $req = $this->db->prepare('UPDATE series SET title=:title, slug=:slug, overview=:overview, etat=:etat, deleted=:deleted, poster_path=:poster_path, cover_path=:cover_path, user_id=:user_id, updated_at=NOW() WHERE id=:id');
+            $req = $this->db->prepare('UPDATE series SET title=:title, slug=:slug, overview=:overview, etat=:etat, deleted=:deleted, user_id=:user_id, updated_at=NOW() WHERE id=:id');
             $req->bindParam(':id', $id);
             $req->bindParam(':title', $inputs['title']);
             $req->bindParam(':slug', $inputs['slug']);
             $req->bindParam(':overview', $inputs['overview']);
             $req->bindParam(':etat', $inputs['etat']);
             $req->bindParam(':deleted', $inputs['deleted']);
-            $req->bindParam(':poster_path', $inputs['poster_path']);
-            $req->bindParam(':cover_path', $inputs['cover_path']);
             $req->bindParam(':user_id', $inputs['user_id']);
             $data['success'] = false;
             $data['serie'] = null;
@@ -113,6 +109,16 @@
                 }
             }
             return $data;
+        }
+
+        public function get_serie_genres($serie_id) {
+            $req = $this->db->prepare('SELECT genre_serie.genre_id as id, 
+                genres.libelle as libelle, genres.slug as slug, genres.deleted as deleted 
+                from genre_serie 
+                LEFT JOIN genres ON genre_serie.genre_id = genres.id 
+                WHERE genre_serie.serie_id=:serie_id AND genres.deleted = 0');
+            $req->bindParam(':serie_id', $serie_id);
+            return $req;
         }
 
         public function delete($id) {

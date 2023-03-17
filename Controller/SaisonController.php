@@ -103,10 +103,10 @@
             $error_code = null;
             $saison = null;
             
-            if (!isset($_POST['libelle']) || $_POST['libelle'] == null || $_POST['libelle'] == "") {
+            if (!isset($_POST['title']) || $_POST['title'] == null || $_POST['title'] == "") {
                 echo json_encode(
                     array(
-                        'message' => "libelle is required",
+                        'message' => "title is required",
                         'code' => $code,
                         'error_code' => 'fields_empty',
                         'saison' => $saison
@@ -153,10 +153,10 @@
             $code = 0;
             $error_code = null;
             
-            if (!isset($_POST['libelle']) || $_POST['libelle'] == null || $_POST['libelle'] == "") {
+            if (!isset($_POST['title']) || $_POST['title'] == null || $_POST['title'] == "") {
                 echo json_encode(
                     array(
-                        'message' => "libelle is required",
+                        'message' => "title is required",
                         'code' => $code,
                         'error_code' => 'fields_empty',
                         'saison' => $saison

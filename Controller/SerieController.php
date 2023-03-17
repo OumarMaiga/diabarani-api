@@ -103,10 +103,10 @@
             $error_code = null;
             $serie = null;
             
-            if (!isset($_POST['libelle']) || $_POST['libelle'] == null || $_POST['libelle'] == "") {
+            if (!isset($_POST['title']) || $_POST['title'] == null || $_POST['title'] == "") {
                 echo json_encode(
                     array(
-                        'message' => "libelle is required",
+                        'message' => "title is required",
                         'code' => $code,
                         'error_code' => 'fields_empty',
                         'serie' => $serie
@@ -144,6 +144,37 @@
         }
 
         /**
+         * Recuperation des genres du serie
+         */
+        public function serie_genres($serie_id) {
+            $code = 0;
+            $error_code = null;
+            $message = null;
+            $genres = null;
+
+            $request = $this->serie->get_serie_genres($serie_id);
+
+            if ($request->execute()) {
+                $code = 1;
+                $message = "Serie genres fetched";
+                $genres = $request->fetchAll();
+            } else {
+                $message = "Serie genres not fetched";
+                $error_code = 'serie_genres_not_fetched';
+            }
+
+            echo json_encode (
+                array (
+                    'code' => $code,
+                    'message' => $message,
+                    'error_code' => $error_code,
+                    'genres' => $genres
+                )
+            );
+            return;
+        }
+
+        /**
          * Mise à jour du serie
          */
         public function update($id) {
@@ -153,10 +184,10 @@
             $code = 0;
             $error_code = null;
             
-            if (!isset($_POST['libelle']) || $_POST['libelle'] == null || $_POST['libelle'] == "") {
+            if (!isset($_POST['title']) || $_POST['title'] == null || $_POST['title'] == "") {
                 echo json_encode(
                     array(
-                        'message' => "libelle is required",
+                        'message' => "title is required",
                         'code' => $code,
                         'error_code' => 'fields_empty',
                         'serie' => $serie
@@ -170,6 +201,12 @@
             } else {
                 $_POST['etat'] = false;
             }
+            
+            $req = $this->serie->getById($id);
+            $req->execute();
+            $serie_old = $req->fetch();
+            $_POST['deleted'] = $serie_old['deleted'];
+            $_POST['slug'] = $serie_old['slug'];
             
             $data = $this->serie->update($id, $_POST);
             

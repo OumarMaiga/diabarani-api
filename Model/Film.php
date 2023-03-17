@@ -35,7 +35,7 @@
         }
 
         public function save($inputs) {
-            $req = $this->db->prepare('INSERT INTO films (title, slug, overview, realisateur, release_date, user_id, type_id, serie_id, saison_id, poster_path, cover_path, video_path, deleted, etat, created_at, updated_at)VALUES(:title, :slug, :overview, :realisateur, :user_id, :type_id, :release_date, :serie_id, :saison_id, :poster_path, :cover_path, :video_path, :deleted, :etat, NOW(), null)');
+            $req = $this->db->prepare('INSERT INTO films (title, slug, overview, realisateur, release_date, user_id, type_id, serie_id, saison_id, deleted, etat, created_at, updated_at)VALUES(:title, :slug, :overview, :realisateur, :user_id, :type_id, :release_date, :serie_id, :saison_id, :deleted, :etat, NOW(), null)');
             $req->bindParam(':title', $inputs['title']);
             $req->bindParam(':slug', $inputs['slug']);
             $req->bindParam(':overview', $inputs['overview']);
@@ -45,9 +45,6 @@
             $req->bindParam(':type_id', $inputs['type_id']);
             $req->bindParam(':serie_id', $inputs['serie_id']);
             $req->bindParam(':saison_id', $inputs['saison_id']);
-            $req->bindParam(':poster_path', $inputs['poster_path']);
-            $req->bindParam(':cover_path', $inputs['cover_path']);
-            $req->bindParam(':video_path', $inputs['video_path']);
             $req->bindParam(':etat', $inputs['etat']);
             $req->bindParam(':deleted', $inputs['deleted']);
             $data['success'] = false;
@@ -145,7 +142,7 @@
         }
 
         public function update($id, $inputs) {
-            $req = $this->db->prepare('UPDATE films SET title=:title, slug=:slug, overview=:overview, realisateur=:realisateur, release_date=:release_date, type_id=:type_id, serie_id=:serie_id, saison_id=:saison_id, poster_path=:poster_path, cover_path=:cover_path, video_path=:video_path, etat=:etat, deleted=:deleted, updated_at = NOW() WHERE id=:id');
+            $req = $this->db->prepare('UPDATE films SET title=:title, slug=:slug, overview=:overview, realisateur=:realisateur, release_date=:release_date, type_id=:type_id, serie_id=:serie_id, saison_id=:saison_id, etat=:etat, deleted=:deleted, updated_at = NOW() WHERE id=:id');
             $req->bindParam(':id', $id);
             $req->bindParam(':title', $inputs['title']);
             $req->bindParam(':slug', $inputs['slug']);
@@ -155,9 +152,6 @@
             $req->bindParam(':type_id', $inputs['type_id']);
             $req->bindParam(':serie_id', $inputs['serie_id']);
             $req->bindParam(':saison_id', $inputs['saison_id']);
-            $req->bindParam(':poster_path', $inputs['poster_path']);
-            $req->bindParam(':cover_path', $inputs['cover_path']);
-            $req->bindParam(':video_path', $inputs['video_path']);
             $req->bindParam(':etat', $inputs['etat']);
             $req->bindParam(':deleted', $inputs['deleted']);
             $data['success'] = false;

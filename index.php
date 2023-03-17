@@ -188,19 +188,22 @@
         case 'update-serie':
             $serie->update($_GET['id']);
             break;
+        case 'serie-genres':
+            $serie->serie_genres($_GET['serie_id']);
+            break;
 
         //////////////////// Saison ////////////////////
         case 'saison':
             $saison->getById($_GET['id']);
             break;
         case 'saisons':
-            $saison->get();
+            $saison->get($_GET['serie_id']);
             break;
         case 'saisons-all':
-            $saison->getAll();
+            $saison->getAll($_GET['serie_id']);
             break;
         case 'store-saison':
-            $saison->store();
+            $saison->store($_GET['serie_id']);
             break;
         case 'edit-saison':
             $saison->getById($_GET['id']);

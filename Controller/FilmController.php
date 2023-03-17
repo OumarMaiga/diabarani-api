@@ -284,6 +284,12 @@
                 $_POST['etat'] = false;
             }
             
+            $req = $this->film->getById($id);
+            $req->execute();
+            $film_old = $req->fetch();
+            $_POST['deleted'] = $film_old['deleted'];
+            $_POST['slug'] = $film_old['slug'];
+            
             $data = $this->film->update($id, $_POST);
             
             if ($data['success']) {
@@ -355,7 +361,6 @@
             $genres = null;
 
             $request = $this->film->get_film_genres($film_id);
-            ;
 
             if ($request->execute()) {
                 $code = 1;
