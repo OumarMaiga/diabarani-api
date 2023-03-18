@@ -127,6 +127,19 @@
                 $code = 1;
                 $message = "Serie saved";
                 $serie = $data['serie'];
+                if (isset($_POST['genre'])) {
+                    // On supprime les serie_genre qui existe
+                    $serie_genre_deleted = $this->serie->delete_serie_genre($serie['id']);
+                    if ($serie_genre_deleted->execute()) {
+                        foreach ($_POST['genre'] as $genre_id) {
+                            $inputs = array(
+                                'serie_id' => $serie['id'],
+                                'genre_id' => $genre_id
+                            );
+                            $this->serie->save_genre_serie($inputs);
+                        }
+                    }
+                }
             } else {
                 $message = "Serie unsaved";
                 $error_code = 'serie_unsaved';
@@ -214,6 +227,19 @@
                 $code = 1;
                 $message = "Serie saved";
                 $serie = $data['serie'];
+                if (isset($_POST['genre'])) {
+                    // On supprime les serie_genre qui existe
+                    $serie_genre_deleted = $this->serie->delete_serie_genre($id);
+                    if ($serie_genre_deleted->execute()) {
+                        foreach ($_POST['genre'] as $genre_id) {
+                            $inputs = array(
+                                'serie_id' => $serie['id'],
+                                'genre_id' => $genre_id
+                            );
+                            $this->serie->save_genre_serie($inputs);
+                        }
+                    }
+                }
             } else {
                 $message = "Serie unsaved";
                 $error_code = 'serie_unsaved';

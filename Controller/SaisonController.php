@@ -12,12 +12,12 @@
             $this->saison = new Saison();
         }
         
-        public function get() {
+        public function get($serie_id) {
             $code = 0;
             $error_code = null;
             $saisons = null;
 
-            $request = $this->saison->get();
+            $request = $this->saison->get($serie_id);
 
             if ($request->execute()) {
                 $code = 1;
@@ -94,7 +94,38 @@
             return;
         } 
 
-        public function store() {
+        /**
+         * Recuperation des genres du saison
+         */
+        public function saison_genres($saison_id) {
+            $code = 0;
+            $error_code = null;
+            $message = null;
+            $genres = null;
+
+            $request = $this->saison->get_saison_genres($saison_id);
+
+            if ($request->execute()) {
+                $code = 1;
+                $message = "Serie genres fetched";
+                $genres = $request->fetchAll();
+            } else {
+                $message = "Serie genres not fetched";
+                $error_code = 'saison_genres_not_fetched';
+            }
+
+            echo json_encode (
+                array (
+                    'code' => $code,
+                    'message' => $message,
+                    'error_code' => $error_code,
+                    'genres' => $genres
+                )
+            );
+            return;
+        }
+
+        public function store($serie_id) {
             
             $json = file_get_contents('php://input');
             
@@ -121,6 +152,7 @@
                 $_POST['etat'] = false;
             }
             
+            $_POST['serie_id'] = $serie_id;
             $data = $this->saison->save($_POST);
             
             if ($data['success']) {
@@ -170,6 +202,13 @@
             } else {
                 $_POST['etat'] = false;
             }
+
+            $req = $this->saison->getById($id);
+            $req->execute();
+            $saison_old = $req->fetch();
+            $_POST['deleted'] = $saison_old['deleted'];
+            $_POST['slug'] = $saison_old['slug'];
+            $_POST['serie_id'] = $saison_old['serie_id'];
             
             $data = $this->saison->update($id, $_POST);
             
@@ -177,6 +216,19 @@
                 $code = 1;
                 $message = "Saison saved";
                 $saison = $data['saison'];
+                if (isset($_POST['genre'])) {
+                    // On supprime les saison_genre qui existe
+                    $saison_genre_deleted = $this->saison->delete_saison_genre($id);
+                    if ($saison_genre_deleted->execute()) {
+                        foreach ($_POST['genre'] as $genre_id) {
+                            $inputs = array(
+                                'saison_id' => $saison['id'],
+                                'genre_id' => $genre_id
+                            );
+                            $this->saison->save_genre_saison($inputs);
+                        }
+                    }
+                }
             } else {
                 $message = "Saison unsaved";
                 $error_code = 'saison_unsaved';

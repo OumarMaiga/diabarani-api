@@ -214,6 +214,9 @@
         case 'update-saison':
             $saison->update($_GET['id']);
             break;
+        case 'saison-genres':
+            $saison->saison_genres($_GET['saison_id']);
+            break;
 
         //////////////////// Film ////////////////////
         case 'film':

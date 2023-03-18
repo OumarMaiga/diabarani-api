@@ -55,6 +55,17 @@
             return $data;
         }
 
+        public function save_genre_serie($inputs) {
+            // On enregistre les nouveau genre_serie dans la base de donnees
+            $req = $this->db->prepare('INSERT INTO genre_serie (serie_id, genre_id)VALUES(:serie_id, :genre_id)');
+            $req->bindParam(':serie_id', $inputs['serie_id']);
+            $req->bindParam(':genre_id', $inputs['genre_id']);
+            $data['success'] = false;
+            $data['genre'] = null;
+            $data = $req->execute();
+            return $data;
+        }
+
         public function update($id, $inputs) {
             $req = $this->db->prepare('UPDATE series SET title=:title, slug=:slug, overview=:overview, etat=:etat, deleted=:deleted, user_id=:user_id, updated_at=NOW() WHERE id=:id');
             $req->bindParam(':id', $id);
@@ -124,6 +135,12 @@
         public function delete($id) {
             $req = $this->db->prepare('DELETE from series WHERE id=:id LIMIT 1');
             $req->bindParam(':id', $id);
+            return $req;
+        }
+
+        public function delete_serie_genre($serie_id) {
+            $req = $this->db->prepare('DELETE from genre_serie WHERE serie_id=:serie_id');
+            $req->bindParam(':serie_id', $serie_id);
             return $req;
         }
     }
