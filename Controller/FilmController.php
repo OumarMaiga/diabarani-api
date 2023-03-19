@@ -512,7 +512,6 @@
             $films = null;
 
             $request = $this->film->get_some_genres_films($genre_ids);
-            ;    
             if ($request->execute()) 
             {
                 $code = 1;

@@ -46,9 +46,8 @@
             if ($req->execute()) {
                 $getType = $this->getById($this->db->lastInsertId());
                 $data['success'] = true;
-                $getType->execute();
-                if ($type = $getType->fetch()) {
-                    $data['type'] = $type;
+                if ($getType->execute()) {
+                    $data['type'] = $getType->fetch();
                 }
             }
             return $data;
@@ -65,9 +64,8 @@
             if ($req->execute()) {
                 $getType = $this->getById($id);
                 $data['success'] = true;
-                $getType->execute();
-                if ($type = $getType->fetch()) {
-                    $data['type'] = $type;
+                if ($getType->execute()) {
+                    $data['type'] = $getType->fetch();
                 }
             }
             return $data;
@@ -81,9 +79,8 @@
             if ($req->execute()) {
                 $getType = $this->getById($id);
                 $data['success'] = true;
-                $getType->execute();
-                if ($type = $getType->fetch()) {
-                    $data['type'] = $type;
+                if ($getType->execute()) {
+                    $data['type'] = $getType->fetch();
                 }
             }
             return $data;

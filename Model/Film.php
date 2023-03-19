@@ -52,9 +52,8 @@
             if ($req->execute()) {
                 $getFilm = $this->getById($this->db->lastInsertId());
                 $data['success'] = true;
-                $getFilm->execute();
-                if ($film = $getFilm->fetch()) {
-                    $data['film'] = $film;
+                if ($getFilm->execute()) {
+                    $data['film'] = $getFilm->fetch();
                 }
             }
             return $data;
@@ -157,9 +156,8 @@
             if ($req->execute()) {
                 $getFilm = $this->getById($id);
                 $data['success'] = true;
-                $getFilm->execute();
-                if ($film = $getFilm->fetch()) {
-                    $data['film'] = $film;
+                if ($getFilm->execute()) {
+                    $data['film'] = $getFilm->fetch();
                 }
             }
             return $data;
@@ -174,9 +172,8 @@
             if ($req->execute()) {
                 $getFilm = $this->getById($id);
                 $data['success'] = true;
-                $getFilm->execute();
-                if ($film = $getFilm->fetch()) {
-                    $data['film'] = $film;
+                if ($getFilm->execute()) {
+                    $data['film'] = $getFilm->fetch();
                 }
             }
             return $data;
@@ -191,9 +188,8 @@
             if ($req->execute()) {
                 $getFilm = $this->getById($id);
                 $data['success'] = true;
-                $getFilm->execute();
-                if ($film = $getFilm->fetch()) {
-                    $data['film'] = $film;
+                if ($getFilm->execute()) {
+                    $data['film'] = $getFilm->fetch();
                 }
             }
             return $data;
@@ -208,9 +204,8 @@
             if ($req->execute()) {
                 $getFilm = $this->getById($id);
                 $data['success'] = true;
-                $getFilm->execute();
-                if ($film = $getFilm->fetch()) {
-                    $data['film'] = $film;
+                if ($getFilm->execute()) {
+                    $data['film'] = $getFilm->fetch();
                 }
             }
             return $data;
@@ -224,9 +219,8 @@
             if ($req->execute()) {
                 $getFilm = $this->getById($id);
                 $data['success'] = true;
-                $getFilm->execute();
-                if ($film = $getFilm->fetch()) {
-                    $data['film'] = $film;
+                if ($getFilm->execute()) {
+                    $data['film'] = $getFilm->fetch();
                 }
             }
             return $data;

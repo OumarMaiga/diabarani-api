@@ -45,9 +45,8 @@
             if ($req->execute()) {
                 $getGenre = $this->getById($this->db->lastInsertId());
                 $data['success'] = true;
-                $getGenre->execute();
-                if ($genre = $getGenre->fetch()) {
-                    $data['genre'] = $genre;
+                if ($getGenre->execute()) {
+                    $data['genre'] = $getGenre->fetch();
                 }
             }
             return $data;
@@ -63,9 +62,8 @@
             if ($req->execute()) {
                 $getGenre = $this->getById($id);
                 $data['success'] = true;
-                $getGenre->execute();
-                if ($genre = $getGenre->fetch()) {
-                    $data['genre'] = $genre;
+                if ($getGenre->execute()) {
+                    $data['genre'] = $getGenre->fetch();
                 }
             }
             return $data;
@@ -79,9 +77,8 @@
             if ($req->execute()) {
                 $getGenre = $this->getById($id);
                 $data['success'] = true;
-                $getGenre->execute();
-                if ($genre = $getGenre->fetch()) {
-                    $data['genre'] = $genre;
+                if ($getGenre->execute()) {
+                    $data['genre'] = $getGenre->fetch();
                 }
             }
             return $data;

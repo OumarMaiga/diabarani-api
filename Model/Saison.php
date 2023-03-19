@@ -59,9 +59,8 @@
             if ($req->execute()) {
                 $getSaison = $this->getById($this->db->lastInsertId());
                 $data['success'] = true;
-                $getSaison->execute();
-                if ($saison = $getSaison->fetch()) {
-                    $data['saison'] = $saison;
+                if ($getSaison->execute()) {
+                    $data['saison'] = $getSaison->fetch();
                 }
             }
             return $data;
@@ -91,9 +90,8 @@
             if ($req->execute()) {
                 $getSaison = $this->getById($id);
                 $data['success'] = true;
-                $getSaison->execute();
-                if ($saison = $getSaison->fetch()) {
-                    $data['saison'] = $saison;
+                if ($getSaison->execute()) {
+                    $data['saison'] = $getSaison->fetch();
                 }
             }
             return $data;
@@ -106,11 +104,10 @@
             $data['success'] = false;
             $data['saison'] = null;
             if ($req->execute()) {
-                $getSerie = $this->getById($id);
+                $getSaison = $this->getById($id);
                 $data['success'] = true;
-                $getSerie->execute();
-                if ($saison = $getSerie->fetch()) {
-                    $data['saison'] = $saison;
+                if ($getSaison->execute()) {
+                    $data['saison'] = $getSaison->fetch();
                 }
             }
             return $data;
@@ -123,11 +120,10 @@
             $data['success'] = false;
             $data['saison'] = null;
             if ($req->execute()) {
-                $getSerie = $this->getById($id);
+                $getSaison = $this->getById($id);
                 $data['success'] = true;
-                $getSerie->execute();
-                if ($saison = $getSerie->fetch()) {
-                    $data['saison'] = $saison;
+                if ($getSaison->execute()) {
+                    $data['saison'] = $getSaison->fetch();
                 }
             }
             return $data;
@@ -141,9 +137,8 @@
             if ($req->execute()) {
                 $getSaison = $this->getById($id);
                 $data['success'] = true;
-                $getSaison->execute();
-                if ($saison = $getSaison->fetch()) {
-                    $data['saison'] = $saison;
+                if ($getSaison->execute()) {
+                    $data['saison'] = $getSaison->fetch();
                 }
             }
             return $data;

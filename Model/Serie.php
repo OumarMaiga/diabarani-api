@@ -47,9 +47,8 @@
             if ($req->execute()) {
                 $getSerie = $this->getById($this->db->lastInsertId());
                 $data['success'] = true;
-                $getSerie->execute();
-                if ($serie = $getSerie->fetch()) {
-                    $data['serie'] = $serie;
+                if ($getSerie->execute()) {
+                    $data['serie'] = $getSerie->fetch();
                 }
             }
             return $data;
@@ -78,9 +77,8 @@
             if ($req->execute()) {
                 $getSerie = $this->getById($id);
                 $data['success'] = true;
-                $getSerie->execute();
-                if ($serie = $getSerie->fetch()) {
-                    $data['serie'] = $serie;
+                if ($getSerie->execute()) {
+                    $data['serie'] = $getSerie->fetch();
                 }
             }
             return $data;
@@ -95,9 +93,8 @@
             if ($req->execute()) {
                 $getSerie = $this->getById($id);
                 $data['success'] = true;
-                $getSerie->execute();
-                if ($serie = $getSerie->fetch()) {
-                    $data['serie'] = $serie;
+                if ($getSerie->execute()) {
+                    $data['serie'] = $getSerie->fetch();
                 }
             }
             return $data;
@@ -112,9 +109,8 @@
             if ($req->execute()) {
                 $getSerie = $this->getById($id);
                 $data['success'] = true;
-                $getSerie->execute();
-                if ($serie = $getSerie->fetch()) {
-                    $data['serie'] = $serie;
+                if ($getSerie->execute()) {
+                    $data['serie'] = $getSerie->fetch();
                 }
             }
             return $data;
@@ -128,9 +124,8 @@
             if ($req->execute()) {
                 $getSerie = $this->getById($id);
                 $data['success'] = true;
-                $getSerie->execute();
-                if ($serie = $getSerie->fetch()) {
-                    $data['serie'] = $serie;
+                if ($getSerie->execute()) {
+                    $data['serie'] = $getSerie->fetch();
                 }
             }
             return $data;

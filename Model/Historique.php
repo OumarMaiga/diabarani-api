@@ -41,9 +41,8 @@
             if ($req->execute()) {
                 $getHistorique = $this->getById($this->db->lastInsertId());
                 $data['success'] = true;
-                $getHistorique->execute();
-                if ($historique = $getHistorique->fetch()) {
-                    $data['historique'] = $historique;
+                if ($getHistorique->execute()) {
+                    $data['historique'] = $getHistorique->fetch();
                 }
             }
             return $data;
@@ -60,9 +59,8 @@
             if ($req->execute()) {
                 $getHistorique = $this->getById($id);
                 $data['success'] = true;
-                $getHistorique->execute();
-                if ($historique = $getHistorique->fetch()) {
-                    $data['historique'] = $historique;
+                if ($getHistorique->execute()) {
+                    $data['historique'] = $getHistorique->fetch();
                 }
             }
             return $data;

@@ -43,11 +43,10 @@
             $data['success'] = false;
             $data['user'] = null;
             if ($req->execute()) {
-                $getUser = $this->getUser($this->db->lastInsertId());
+                $getUser = $this->getById($this->db->lastInsertId());
                 $data['success'] = true;
-                $getUser->execute();
-                if ($user = $getUser->fetch()) {
-                    $data['user'] = $user;
+                if ($getUser->execute() ) {
+                    $data['user'] = $getUser->fetch();
                 }
             }
             return $data;
