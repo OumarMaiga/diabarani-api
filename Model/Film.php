@@ -35,14 +35,14 @@
         }
 
         public function save($inputs) {
-            $req = $this->db->prepare('INSERT INTO films (title, slug, overview, realisateur, release_date, user_id, type_id, serie_id, saison_id, deleted, etat, created_at, updated_at)VALUES(:title, :slug, :overview, :realisateur, :user_id, :type_id, :release_date, :serie_id, :saison_id, :deleted, :etat, NOW(), null)');
+            $req = $this->db->prepare('INSERT INTO films (title, slug, overview, realisateur, release_date, user_id, type, serie_id, saison_id, deleted, etat, created_at, updated_at)VALUES(:title, :slug, :overview, :realisateur, :user_id, :type, :release_date, :serie_id, :saison_id, :deleted, :etat, NOW(), null)');
             $req->bindParam(':title', $inputs['title']);
             $req->bindParam(':slug', $inputs['slug']);
             $req->bindParam(':overview', $inputs['overview']);
             $req->bindParam(':realisateur', $inputs['realisateur']);
             $req->bindParam(':release_date', $inputs['release_date']);
             $req->bindParam(':user_id', $inputs['user_id']);
-            $req->bindParam(':type_id', $inputs['type_id']);
+            $req->bindParam(':type', $inputs['type']);
             $req->bindParam(':serie_id', $inputs['serie_id']);
             $req->bindParam(':saison_id', $inputs['saison_id']);
             $req->bindParam(':etat', $inputs['etat']);
@@ -141,13 +141,13 @@
         }
 
         public function update($id, $inputs) {
-            $req = $this->db->prepare('UPDATE films SET title=:title, overview=:overview, realisateur=:realisateur, release_date=:release_date, type_id=:type_id, serie_id=:serie_id, saison_id=:saison_id, etat=:etat, updated_at = NOW() WHERE id=:id');
+            $req = $this->db->prepare('UPDATE films SET title=:title, overview=:overview, realisateur=:realisateur, release_date=:release_date, type=:type, serie_id=:serie_id, saison_id=:saison_id, etat=:etat, updated_at = NOW() WHERE id=:id');
             $req->bindParam(':id', $id);
             $req->bindParam(':title', $inputs['title']);
             $req->bindParam(':overview', $inputs['overview']);
             $req->bindParam(':realisateur', $inputs['realisateur']);
             $req->bindParam(':release_date', $inputs['release_date']);
-            $req->bindParam(':type_id', $inputs['type_id']);
+            $req->bindParam(':type', $inputs['type']);
             $req->bindParam(':serie_id', $inputs['serie_id']);
             $req->bindParam(':saison_id', $inputs['saison_id']);
             $req->bindParam(':etat', $inputs['etat']);

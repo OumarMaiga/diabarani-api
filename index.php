@@ -12,7 +12,6 @@
     use Controller\VideoController;
     use Controller\ImageController;
     use Controller\HistoriqueController;
-    use Controller\TypeController;
     use Controller\SerieController;
     use Controller\SaisonController;
     /*use \Router;*/
@@ -26,7 +25,6 @@
     $video = new VideoController();
     $image = new ImageController();
     $historique = new HistoriqueController();
-    $type = new TypeController();
     $serie = new SerieController();
     $saison = new SaisonController();
     
@@ -144,32 +142,6 @@
             break;
         case 'update-genre':
             $genre->update($_GET['id']);
-            break;
-
-        //////////////////// Type ////////////////////
-        case 'type':
-            $type->getById($_GET['id']);
-            break;
-        case 'types':
-            $type->get();
-            break;
-        case 'types-all':
-            $type->getAll();
-            break;
-        case 'store-type':
-            $type->store();
-            break;
-        case 'edit-type':
-            $type->getById($_GET['id']);
-            break;
-        case 'destroy-type':
-            $type->destroy($_GET['id']);
-            break;
-        case 'delete-type':
-            $type->delete($_GET['id']);
-            break;
-        case 'update-type':
-            $type->update($_GET['id']);
             break;
 
         //////////////////// Serie ////////////////////
