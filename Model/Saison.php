@@ -79,13 +79,11 @@
         }
 
         public function update($id, $inputs) {
-            $req = $this->db->prepare('UPDATE saisons SET title=:title, slug=:slug, overview=:overview, etat=:etat, deleted=:deleted, serie_id=:serie_id, user_id=:user_id, updated_at=NOW() WHERE id=:id');
+            $req = $this->db->prepare('UPDATE saisons SET title=:title, overview=:overview, etat=:etat, serie_id=:serie_id, user_id=:user_id, updated_at=NOW() WHERE id=:id');
             $req->bindParam(':id', $id);
             $req->bindParam(':title', $inputs['title']);
-            $req->bindParam(':slug', $inputs['slug']);
             $req->bindParam(':overview', $inputs['overview']);
             $req->bindParam(':etat', $inputs['etat']);
-            $req->bindParam(':deleted', $inputs['deleted']);
             $req->bindParam(':serie_id', $inputs['serie_id']);
             $req->bindParam(':user_id', $inputs['user_id']);
             $data['success'] = false;

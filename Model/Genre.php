@@ -35,9 +35,11 @@
         }
 
         public function save($inputs) {
-            $req = $this->db->prepare('INSERT INTO genres (libelle, etat, created_at, updated_at)VALUES(:libelle, :etat, NOW(), null)');
+            $req = $this->db->prepare('INSERT INTO genres (libelle, slug, etat, deleted, created_at, updated_at)VALUES(:libelle, :slug, :etat, :deleted NOW(), null)');
             $req->bindParam(':libelle', $inputs['libelle']);
+            $req->bindParam(':slug', $inputs['slug']);
             $req->bindParam(':etat', $inputs['etat']);
+            $req->bindParam(':deleted', $inputs['deleted']);
             $data['success'] = false;
             $data['genre'] = null;
             if ($req->execute()) {

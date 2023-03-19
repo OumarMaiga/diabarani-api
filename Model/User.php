@@ -32,13 +32,14 @@
         }
 
         public function setUser($inputs) {
-            $req = $this->db->prepare('INSERT INTO users (first_name, last_name, email, phone, password, token, created_at, updated_at)VALUES(:first_name, :last_name, :email, :phone, :password, :token, NOW(), NOW())');
+            $req = $this->db->prepare('INSERT INTO users (first_name, last_name, email, phone, password, token, deleted, created_at, updated_at)VALUES(:first_name, :last_name, :email, :phone, :password, :token, :deleted, NOW(), NOW())');
             $req->bindParam(':first_name', $inputs['prenom']);
             $req->bindParam(':last_name', $inputs['nom']);
             $req->bindParam(':phone', $inputs['phone']);
             $req->bindParam(':email', $inputs['email']);
             $req->bindParam(':password', $inputs['password']);
             $req->bindParam(':token', $inputs['token']);
+            $req->bindParam(':deleted', $inputs['deleted']);
             $data['success'] = false;
             $data['user'] = null;
             if ($req->execute()) {

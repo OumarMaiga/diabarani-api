@@ -202,13 +202,6 @@
             } else {
                 $_POST['etat'] = false;
             }
-
-            $req = $this->saison->getById($id);
-            $req->execute();
-            $saison_old = $req->fetch();
-            $_POST['deleted'] = $saison_old['deleted'];
-            $_POST['slug'] = $saison_old['slug'];
-            $_POST['serie_id'] = $saison_old['serie_id'];
             
             $data = $this->saison->update($id, $_POST);
             

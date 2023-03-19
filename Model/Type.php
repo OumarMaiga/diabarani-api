@@ -35,9 +35,11 @@
         }
 
         public function save($inputs) {
-            $req = $this->db->prepare('INSERT INTO types (libelle, etat, user_id, created_at, updated_at)VALUES(:libelle, :etat, :user_id, NOW(), null)');
+            $req = $this->db->prepare('INSERT INTO types (libelle, slug, etat, deleted, user_id, created_at, updated_at)VALUES(:libelle, :slug, :etat, :deleted, :user_id, NOW(), null)');
             $req->bindParam(':libelle', $inputs['libelle']);
+            $req->bindParam(':slug', $inputs['slug']);
             $req->bindParam(':etat', $inputs['etat']);
+            $req->bindParam(':deleted', $inputs['deleted']);
             $req->bindParam(':user_id', $inputs['user_id']);
             $data['success'] = false;
             $data['type'] = null;

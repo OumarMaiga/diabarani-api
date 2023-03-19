@@ -142,10 +142,9 @@
         }
 
         public function update($id, $inputs) {
-            $req = $this->db->prepare('UPDATE films SET title=:title, slug=:slug, overview=:overview, realisateur=:realisateur, release_date=:release_date, type_id=:type_id, serie_id=:serie_id, saison_id=:saison_id, etat=:etat, deleted=:deleted, updated_at = NOW() WHERE id=:id');
+            $req = $this->db->prepare('UPDATE films SET title=:title, overview=:overview, realisateur=:realisateur, release_date=:release_date, type_id=:type_id, serie_id=:serie_id, saison_id=:saison_id, etat=:etat, updated_at = NOW() WHERE id=:id');
             $req->bindParam(':id', $id);
             $req->bindParam(':title', $inputs['title']);
-            $req->bindParam(':slug', $inputs['slug']);
             $req->bindParam(':overview', $inputs['overview']);
             $req->bindParam(':realisateur', $inputs['realisateur']);
             $req->bindParam(':release_date', $inputs['release_date']);
@@ -153,7 +152,6 @@
             $req->bindParam(':serie_id', $inputs['serie_id']);
             $req->bindParam(':saison_id', $inputs['saison_id']);
             $req->bindParam(':etat', $inputs['etat']);
-            $req->bindParam(':deleted', $inputs['deleted']);
             $data['success'] = false;
             $data['film'] = null;
             if ($req->execute()) {

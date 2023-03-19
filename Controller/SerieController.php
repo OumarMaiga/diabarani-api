@@ -215,12 +215,6 @@
                 $_POST['etat'] = false;
             }
             
-            $req = $this->serie->getById($id);
-            $req->execute();
-            $serie_old = $req->fetch();
-            $_POST['deleted'] = $serie_old['deleted'];
-            $_POST['slug'] = $serie_old['slug'];
-            
             $data = $this->serie->update($id, $_POST);
             
             if ($data['success']) {
