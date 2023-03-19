@@ -87,13 +87,13 @@
             $error_code = null;
             $historique = null;
 
-            $request = $this->historique->delete($id);
+            $request = $this->historique->destroy($id);
             if($request->execute()) {                
                 $code = 1;
-                $message = "Historique deleted";
+                $message = "Historique destroy";
             } else {
-                $message = "Historique not deleted";
-                $error_code = 'historique_not_deleted';
+                $message = "Historique not destroy";
+                $error_code = 'historique_not_destroy';
             }
 
             echo json_encode(

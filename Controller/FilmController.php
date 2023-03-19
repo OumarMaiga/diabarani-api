@@ -319,19 +319,45 @@
             );
         }
         
+        public function delete($id) {
+            $code = 0;
+            $error_code = null;
+            $message = null;
+            $film = null;
+
+            $data = $this->film->delete($id);
+            if($data['success']) {                
+                $code = 1;
+                $message = "Film deleted";
+            } else {
+                $message = "Film not deleted";
+                $error_code = 'film_not_deleted';
+            }
+
+            echo json_encode(
+                array(
+                    'code' => $code,
+                    'message' => $message,
+                    'error_code' => $error_code,
+                    'film' => $film
+                )
+            );
+            return;
+        } 
+        
         public function destroy($id) {
             $code = 0;
             $error_code = null;
             $message = null;
             $film = null;
 
-            $request = $this->film->delete($id);
+            $request = $this->film->destroy($id);
             if($request->execute()) {                
                 $code = 1;
-                $message = "Film deleted";
+                $message = "Film destroy";
             } else {
-                $message = "Film not deleted";
-                $error_code = 'film_not_deleted';
+                $message = "Film not destroy";
+                $error_code = 'film_not_destroy';
             }
 
             echo json_encode(

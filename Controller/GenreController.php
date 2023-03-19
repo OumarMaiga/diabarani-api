@@ -192,18 +192,43 @@
             );
         }
         
-        public function destroy($id) {
+        public function delete($id) {
             $code = 0;
             $error_code = null;
             $genre = null;
 
-            $request = $this->genre->delete($id);
-            if($request->execute()) {                
+            $data = $this->genre->delete($id);
+            if($data['success']) {                
                 $code = 1;
                 $message = "Genre deleted";
             } else {
                 $message = "Genre not deleted";
                 $error_code = 'genre_not_deleted';
+            }
+
+            echo json_encode(
+                array(
+                    'code' => $code,
+                    'message' => $message,
+                    'error_code' => $error_code,
+                    'genre' => $genre
+                )
+            );
+            return;
+        } 
+        
+        public function destroy($id) {
+            $code = 0;
+            $error_code = null;
+            $genre = null;
+
+            $request = $this->genre->destroy($id);
+            if($request->execute()) {                
+                $code = 1;
+                $message = "Genre destroy";
+            } else {
+                $message = "Genre not destroy";
+                $error_code = 'genre_not_destroy';
             }
 
             echo json_encode(

@@ -68,7 +68,7 @@
             return $data;
         }
 
-        public function delete($id) {
+        public function destroy($id) {
             $req = $this->db->prepare('DELETE from historiques WHERE id=:id LIMIT 1');
             $req->bindParam(':id', $id);
             return $req;

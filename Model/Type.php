@@ -74,6 +74,22 @@
         }
 
         public function delete($id) {
+            $req = $this->db->prepare('UPDATE types SET deleted=1, updated_at = NOW() WHERE id=:id');
+            $req->bindParam(':id', $id);
+            $data['success'] = false;
+            $data['type'] = null;
+            if ($req->execute()) {
+                $getType = $this->getById($id);
+                $data['success'] = true;
+                $getType->execute();
+                if ($type = $getType->fetch()) {
+                    $data['type'] = $type;
+                }
+            }
+            return $data;
+        }
+
+        public function destroy($id) {
             $req = $this->db->prepare('DELETE from types WHERE id=:id LIMIT 1');
             $req->bindParam(':id', $id);
             return $req;

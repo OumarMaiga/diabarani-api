@@ -72,6 +72,22 @@
         }
 
         public function delete($id) {
+            $req = $this->db->prepare('UPDATE genres SET deleted=1, updated_at = NOW() WHERE id=:id');
+            $req->bindParam(':id', $id);
+            $data['success'] = false;
+            $data['genre'] = null;
+            if ($req->execute()) {
+                $getGenre = $this->getById($id);
+                $data['success'] = true;
+                $getGenre->execute();
+                if ($genre = $getGenre->fetch()) {
+                    $data['genre'] = $genre;
+                }
+            }
+            return $data;
+        }
+
+        public function destroy($id) {
             $req = $this->db->prepare('DELETE from genres WHERE id=:id LIMIT 1');
             $req->bindParam(':id', $id);
             return $req;

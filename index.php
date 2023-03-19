@@ -136,8 +136,11 @@
         case 'edit-genre':
             $genre->getById($_GET['id']);
             break;
-        case 'delete-genre':
+        case 'destroy-genre':
             $genre->destroy($_GET['id']);
+            break;
+        case 'delete-genre':
+            $genre->delete($_GET['id']);
             break;
         case 'update-genre':
             $genre->update($_GET['id']);
@@ -159,8 +162,11 @@
         case 'edit-type':
             $type->getById($_GET['id']);
             break;
-        case 'delete-type':
+        case 'destroy-type':
             $type->destroy($_GET['id']);
+            break;
+        case 'delete-type':
+            $type->delete($_GET['id']);
             break;
         case 'update-type':
             $type->update($_GET['id']);
@@ -182,8 +188,11 @@
         case 'edit-serie':
             $serie->getById($_GET['id']);
             break;
-        case 'delete-serie':
+        case 'destroy-serie':
             $serie->destroy($_GET['id']);
+            break;
+        case 'delete-serie':
+            $serie->delete($_GET['id']);
             break;
         case 'update-serie':
             $serie->update($_GET['id']);
@@ -208,8 +217,11 @@
         case 'edit-saison':
             $saison->getById($_GET['id']);
             break;
-        case 'delete-saison':
+        case 'destroy-saison':
             $saison->destroy($_GET['id']);
+            break;
+        case 'delete-saison':
+            $saison->delete($_GET['id']);
             break;
         case 'update-saison':
             $saison->update($_GET['id']);
@@ -234,8 +246,11 @@
         case 'edit-film':
             $film->getById($_GET['id']);
             break;
-        case 'delete-film':
+        case 'destroy-film':
             $film->destroy($_GET['id']);
+            break;
+        case 'delete-film':
+            $film->delete($_GET['id']);
             break;
         case 'update-film':
             $film->update($_GET['id']);
@@ -276,7 +291,7 @@
         case 'user-historiques':
             $historique->getByUser($_GET['user_id']);
             break;
-        case 'delete-historique':
+        case 'destroy-historique':
             $historique->destroy($_GET['id']);
             break;
             

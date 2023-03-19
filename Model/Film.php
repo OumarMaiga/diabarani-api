@@ -217,6 +217,22 @@
         }
 
         public function delete($id) {
+            $req = $this->db->prepare('UPDATE films SET deleted=1, updated_at = NOW() WHERE id=:id');
+            $req->bindParam(':id', $id);
+            $data['success'] = false;
+            $data['film'] = null;
+            if ($req->execute()) {
+                $getFilm = $this->getById($id);
+                $data['success'] = true;
+                $getFilm->execute();
+                if ($film = $getFilm->fetch()) {
+                    $data['film'] = $film;
+                }
+            }
+            return $data;
+        }
+
+        public function destroy($id) {
             $req = $this->db->prepare('DELETE from films WHERE id=:id LIMIT 1');
             $req->bindParam(':id', $id);
             return $req;

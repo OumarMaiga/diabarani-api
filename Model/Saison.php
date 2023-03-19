@@ -134,6 +134,22 @@
         }
 
         public function delete($id) {
+            $req = $this->db->prepare('UPDATE saisons SET deleted=1, updated_at = NOW() WHERE id=:id');
+            $req->bindParam(':id', $id);
+            $data['success'] = false;
+            $data['saison'] = null;
+            if ($req->execute()) {
+                $getSaison = $this->getById($id);
+                $data['success'] = true;
+                $getSaison->execute();
+                if ($saison = $getSaison->fetch()) {
+                    $data['saison'] = $saison;
+                }
+            }
+            return $data;
+        }
+
+        public function destroy($id) {
             $req = $this->db->prepare('DELETE from saisons WHERE id=:id LIMIT 1');
             $req->bindParam(':id', $id);
             return $req;

@@ -237,18 +237,43 @@
             );
         }
         
-        public function destroy($id) {
+        public function delete($id) {
             $code = 0;
             $error_code = null;
             $saison = null;
 
-            $request = $this->saison->delete($id);
-            if($request->execute()) {                
+            $data = $this->saison->delete($id);
+            if($data['success']) {                
                 $code = 1;
                 $message = "Saison deleted";
             } else {
                 $message = "Saison not deleted";
                 $error_code = 'saison_not_deleted';
+            }
+
+            echo json_encode(
+                array(
+                    'code' => $code,
+                    'message' => $message,
+                    'error_code' => $error_code,
+                    'saison' => $saison
+                )
+            );
+            return;
+        } 
+        
+        public function destroy($id) {
+            $code = 0;
+            $error_code = null;
+            $saison = null;
+
+            $request = $this->saison->destroy($id);
+            if($request->execute()) {                
+                $code = 1;
+                $message = "Saison destroy";
+            } else {
+                $message = "Saison not destroy";
+                $error_code = 'saison_not_destroy';
             }
 
             echo json_encode(

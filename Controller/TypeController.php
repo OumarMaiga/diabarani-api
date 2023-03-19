@@ -192,18 +192,43 @@
             );
         }
         
-        public function destroy($id) {
+        public function delete($id) {
             $code = 0;
             $error_code = null;
             $type = null;
 
-            $request = $this->type->delete($id);
-            if($request->execute()) {                
+            $data = $this->type->delete($id);
+            if($data['success']) {                
                 $code = 1;
                 $message = "Type deleted";
             } else {
                 $message = "Type not deleted";
                 $error_code = 'type_not_deleted';
+            }
+
+            echo json_encode(
+                array(
+                    'code' => $code,
+                    'message' => $message,
+                    'error_code' => $error_code,
+                    'type' => $type
+                )
+            );
+            return;
+        } 
+        
+        public function destroy($id) {
+            $code = 0;
+            $error_code = null;
+            $type = null;
+
+            $request = $this->type->destroy($id);
+            if($request->execute()) {                
+                $code = 1;
+                $message = "Type destroy";
+            } else {
+                $message = "Type not destroy";
+                $error_code = 'type_not_destroy';
             }
 
             echo json_encode(

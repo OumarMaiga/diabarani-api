@@ -120,6 +120,22 @@
             return $data;
         }
 
+        public function delete($id) {
+            $req = $this->db->prepare('UPDATE series SET deleted=1, updated_at = NOW() WHERE id=:id');
+            $req->bindParam(':id', $id);
+            $data['success'] = false;
+            $data['serie'] = null;
+            if ($req->execute()) {
+                $getSerie = $this->getById($id);
+                $data['success'] = true;
+                $getSerie->execute();
+                if ($serie = $getSerie->fetch()) {
+                    $data['serie'] = $serie;
+                }
+            }
+            return $data;
+        }
+
         public function get_serie_genres($serie_id) {
             $req = $this->db->prepare('SELECT genre_serie.genre_id as id, 
                 genres.libelle as libelle, genres.slug as slug, genres.deleted as deleted 
@@ -130,7 +146,7 @@
             return $req;
         }
 
-        public function delete($id) {
+        public function destroy($id) {
             $req = $this->db->prepare('DELETE from series WHERE id=:id LIMIT 1');
             $req->bindParam(':id', $id);
             return $req;

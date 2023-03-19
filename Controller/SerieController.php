@@ -249,18 +249,43 @@
             );
         }
         
-        public function destroy($id) {
+        public function delete($id) {
             $code = 0;
             $error_code = null;
             $serie = null;
 
-            $request = $this->serie->delete($id);
-            if($request->execute()) {                
+            $data = $this->serie->delete($id);
+            if($data['success']) {                
                 $code = 1;
                 $message = "Serie deleted";
             } else {
                 $message = "Serie not deleted";
                 $error_code = 'serie_not_deleted';
+            }
+
+            echo json_encode(
+                array(
+                    'code' => $code,
+                    'message' => $message,
+                    'error_code' => $error_code,
+                    'serie' => $serie
+                )
+            );
+            return;
+        } 
+        
+        public function destroy($id) {
+            $code = 0;
+            $error_code = null;
+            $serie = null;
+
+            $request = $this->serie->destroy($id);
+            if($request->execute()) {                
+                $code = 1;
+                $message = "Serie destroy";
+            } else {
+                $message = "Serie not destroy";
+                $error_code = 'serie_not_destroy';
             }
 
             echo json_encode(
