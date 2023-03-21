@@ -3,13 +3,16 @@
     namespace Controller;
 
     use Model\Film;
+    use Model\Episode;
     
     class VideoController {
         
         private $film;
+        private $episode;
         
         public function __construct() {
             $this->film = new Film;
+            $this->episode = new Episode;
         }
 
         public function upload() {
@@ -29,6 +32,12 @@
                 {    
                     if($_POST['type'] == 'video')
                         $this->film->update_video($_POST['film_id'],['video_path' => API_URL . $_POST['target_file']]);
+                }
+
+                if($_POST['table'] == 'episode')
+                {    
+                    if($_POST['type'] == 'video')
+                        $this->episode->update_video($_POST['episode_id'],['video_path' => API_URL . $_POST['target_file']]);
                 }
             
                 $code = 1;

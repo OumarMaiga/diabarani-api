@@ -1,4 +1,7 @@
 <?php
+    
+    header("Content-Type: application/json; charset=UTF-8");
+    header("Access-Control-Allow-Origin: *");
 
     require "./bootstrap.php";
 
@@ -14,10 +17,9 @@
     use Controller\HistoriqueController;
     use Controller\SerieController;
     use Controller\SaisonController;
+    use Controller\EpisodeController;
     /*use \Router;*/
-    
-    header("Content-Type: application/json; charset=UTF-8");
-    
+
     $auth = new AuthController();
     $user = new UserController();
     $genre = new GenreController();
@@ -27,6 +29,7 @@
     $historique = new HistoriqueController();
     $serie = new SerieController();
     $saison = new SaisonController();
+    $episode = new EpisodeController();
     
     /*header("Access-Control-Allow-Origin: *");
     header("Content-Type: application/json; charset=UTF-8");
@@ -200,6 +203,32 @@
             break;
         case 'saison-genres':
             $saison->saison_genres($_GET['saison_id']);
+            break;
+
+        //////////////////// Episode ////////////////////
+        case 'episode':
+            $episode->getById($_GET['id']);
+            break;
+        case 'episodes':
+            $episode->get($_GET['serie_id'], $_GET['saison_id']);
+            break;
+        case 'episodes-all':
+            $episode->getAll($_GET['serie_id'], $_GET['saison_id']);
+            break;
+        case 'store-episode':
+            $episode->store($_GET['serie_id'], $_GET['saison_id']);
+            break;
+        case 'edit-episode':
+            $episode->getById($_GET['id']);
+            break;
+        case 'destroy-episode':
+            $episode->destroy($_GET['id']);
+            break;
+        case 'delete-episode':
+            $episode->delete($_GET['id']);
+            break;
+        case 'update-episode':
+            $episode->update($_GET['id']);
             break;
 
         //////////////////// Film ////////////////////

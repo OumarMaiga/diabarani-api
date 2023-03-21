@@ -5,17 +5,20 @@
     use Model\Film;
     use Model\Serie;
     use Model\Saison;
+    use Model\Episode;
     
     class ImageController {
         
         private $film;
         private $serie;
         private $saison;
+        private $episode;
         
         public function __construct() {
             $this->film = new Film;
             $this->serie = new Serie;
             $this->saison = new Saison;
+            $this->episode = new Episode;
         }
 
         public function upload() {
@@ -56,6 +59,15 @@
                     
                     if($_POST['type'] == 'cover')
                         $this->saison->update_cover($_POST['saison_id'],['cover_path' => API_URL . $_POST['target_file']]);
+                }
+
+                if($_POST['table'] == 'episode')
+                {
+                    if($_POST['type'] == 'poster')
+                        $this->episode->update_poster($_POST['episode_id'],['poster_path' => API_URL . $_POST['target_file']]);
+                    
+                    if($_POST['type'] == 'cover')
+                        $this->episode->update_cover($_POST['episode_id'],['cover_path' => API_URL . $_POST['target_file']]);
                 }
             
                 $code = 1;
