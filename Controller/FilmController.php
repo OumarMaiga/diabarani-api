@@ -223,6 +223,11 @@
                 $_POST['etat'] = false;
             }
             
+            $data_slug = $this->film->getBy('slug', '=', $_POST['slug']);
+            $data_slug->execute();
+            if($data_slug->rowCount() > 0)
+                $_POST['slug'] = $_POST['slug'].'-'.$data_slug->rowCount();
+
             $data = $this->film->save($_POST);
             
             if ($data['success']) {

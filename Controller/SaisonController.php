@@ -152,6 +152,11 @@
                 $_POST['etat'] = false;
             }
             
+            $data_slug = $this->saison->getBy('slug', '=', $_POST['slug']);
+            $data_slug->execute();
+            if($data_slug->rowCount() > 0)
+                $_POST['slug'] = $_POST['slug'].'-'.$data_slug->rowCount();
+                
             $_POST['serie_id'] = $serie_id;
             $data = $this->saison->save($_POST);
             

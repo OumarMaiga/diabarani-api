@@ -121,8 +121,14 @@
                 $_POST['etat'] = false;
             }
             
+            $data_slug = $this->episode->getBy('slug', '=', $_POST['slug']);
+            $data_slug->execute();
+            if($data_slug->rowCount() > 0)
+                $_POST['slug'] = $_POST['slug'].'-'.$data_slug->rowCount();
+                
             $_POST['serie_id'] = $serie_id;
             $_POST['saison_id'] = $saison_id;
+            
             $data = $this->episode->save($_POST);
             
             if ($data['success']) {

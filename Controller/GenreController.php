@@ -121,6 +121,11 @@
                 $_POST['etat'] = false;
             }
             
+            $data_slug = $this->genre->getBy('slug', '=', $_POST['slug']);
+            $data_slug->execute();
+            if($data_slug->rowCount() > 0)
+                $_POST['slug'] = $_POST['slug'].'-'.$data_slug->rowCount();
+                
             $data = $this->genre->save($_POST);
             
             if ($data['success']) {
