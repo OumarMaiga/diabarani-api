@@ -31,13 +31,13 @@
                 if($_POST['table'] == 'film')
                 {    
                     if($_POST['type'] == 'video')
-                        $this->film->update_video($_POST['film_id'],['video_path' => API_URL . $_POST['target_file']]);
+                        $this->film->update_video($_POST['film_id'],['video_path' => $_POST['target_file']]);
                 }
 
                 if($_POST['table'] == 'episode')
                 {    
                     if($_POST['type'] == 'video')
-                        $this->episode->update_video($_POST['episode_id'],['video_path' => API_URL . $_POST['target_file']]);
+                        $this->episode->update_video($_POST['episode_id'],['video_path' => $_POST['target_file']]);
                 }
             
                 $code = 1;

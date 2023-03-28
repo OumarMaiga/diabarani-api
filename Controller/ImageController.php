@@ -37,37 +37,37 @@
                 if($_POST['table'] == 'film')
                 {
                     if($_POST['type'] == 'poster')
-                        $this->film->update_poster($_POST['film_id'],['poster_path' => API_URL . $_POST['target_file']]);
+                        $this->film->update_poster($_POST['film_id'],['poster_path' => $_POST['target_file']]);
                     
                     if($_POST['type'] == 'cover')
-                        $this->film->update_cover($_POST['film_id'],['cover_path' => API_URL . $_POST['target_file']]);
+                        $this->film->update_cover($_POST['film_id'],['cover_path' => $_POST['target_file']]);
                 }
 
                 if($_POST['table'] == 'serie')
                 {
                     if($_POST['type'] == 'poster')
-                        $this->serie->update_poster($_POST['serie_id'],['poster_path' => API_URL . $_POST['target_file']]);
+                        $this->serie->update_poster($_POST['serie_id'],['poster_path' => $_POST['target_file']]);
                     
                     if($_POST['type'] == 'cover')
-                        $this->serie->update_cover($_POST['serie_id'],['cover_path' => API_URL . $_POST['target_file']]);
+                        $this->serie->update_cover($_POST['serie_id'],['cover_path' => $_POST['target_file']]);
                 }
 
                 if($_POST['table'] == 'saison')
                 {
                     if($_POST['type'] == 'poster')
-                        $this->saison->update_poster($_POST['saison_id'],['poster_path' => API_URL . $_POST['target_file']]);
+                        $this->saison->update_poster($_POST['saison_id'],['poster_path' => $_POST['target_file']]);
                     
                     if($_POST['type'] == 'cover')
-                        $this->saison->update_cover($_POST['saison_id'],['cover_path' => API_URL . $_POST['target_file']]);
+                        $this->saison->update_cover($_POST['saison_id'],['cover_path' => $_POST['target_file']]);
                 }
 
                 if($_POST['table'] == 'episode')
                 {
                     if($_POST['type'] == 'poster')
-                        $this->episode->update_poster($_POST['episode_id'],['poster_path' => API_URL . $_POST['target_file']]);
+                        $this->episode->update_poster($_POST['episode_id'],['poster_path' => $_POST['target_file']]);
                     
                     if($_POST['type'] == 'cover')
-                        $this->episode->update_cover($_POST['episode_id'],['cover_path' => API_URL . $_POST['target_file']]);
+                        $this->episode->update_cover($_POST['episode_id'],['cover_path' => $_POST['target_file']]);
                 }
             
                 $code = 1;
