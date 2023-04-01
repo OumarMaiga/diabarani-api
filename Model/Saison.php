@@ -35,21 +35,19 @@
             return $req;
         }
 
-        public function get_saison_genres($saison_id) {
-            $req = $this->db->prepare('SELECT genre_saison.genre_id as id, 
-                genres.libelle as libelle, genres.slug as slug, genres.deleted as deleted 
-                from genre_saison 
-                LEFT JOIN genres ON genre_saison.genre_id = genres.id 
-                WHERE genre_saison.saison_id=:saison_id AND genres.deleted = 0');
-            $req->bindParam(':saison_id', $saison_id);
+        public function new_saisons() {
+            $today = date('Y-m-d');
+            $req = $this->db->prepare('SELECT * from saisons WHERE release_date < :today && deleted = 0 && etat = 1 LIMIT 0, 12');
+            $req->bindParam(':today', $today);
             return $req;
         }
 
         public function save($inputs) {
-            $req = $this->db->prepare('INSERT INTO saisons (title, slug, overview, etat, deleted, serie_id, user_id, created_at, updated_at)VALUES(:title, :slug, :overview, :etat, :deleted, :serie_id, :user_id, NOW(), null)');
+            $req = $this->db->prepare('INSERT INTO saisons (title, slug, overview, release_date, etat, deleted, serie_id, user_id, created_at, updated_at)VALUES(:title, :slug, :overview, :release_date, :etat, :deleted, :serie_id, :user_id, NOW(), null)');
             $req->bindParam(':title', $inputs['title']);
             $req->bindParam(':slug', $inputs['slug']);
             $req->bindParam(':overview', $inputs['overview']);
+            $req->bindParam(':release_date', $inputs['release_date']);
             $req->bindParam(':etat', $inputs['etat']);
             $req->bindParam(':deleted', $inputs['deleted']);
             $req->bindParam(':serie_id', $inputs['serie_id']);
@@ -66,22 +64,12 @@
             return $data;
         }
 
-        public function save_genre_saison($inputs) {
-            // On enregistre les nouveau genre_saison dans la base de donnees
-            $req = $this->db->prepare('INSERT INTO genre_saison (saison_id, genre_id)VALUES(:saison_id, :genre_id)');
-            $req->bindParam(':saison_id', $inputs['saison_id']);
-            $req->bindParam(':genre_id', $inputs['genre_id']);
-            $data['success'] = false;
-            $data['genre'] = null;
-            $data = $req->execute();
-            return $data;
-        }
-
         public function update($id, $inputs) {
-            $req = $this->db->prepare('UPDATE saisons SET title=:title, overview=:overview, etat=:etat, serie_id=:serie_id, user_id=:user_id, updated_at=NOW() WHERE id=:id');
+            $req = $this->db->prepare('UPDATE saisons SET title=:title, overview=:overview, release_date=:release_date, etat=:etat, serie_id=:serie_id, user_id=:user_id, updated_at=NOW() WHERE id=:id');
             $req->bindParam(':id', $id);
             $req->bindParam(':title', $inputs['title']);
             $req->bindParam(':overview', $inputs['overview']);
+            $req->bindParam(':release_date', $inputs['release_date']);
             $req->bindParam(':etat', $inputs['etat']);
             $req->bindParam(':serie_id', $inputs['serie_id']);
             $req->bindParam(':user_id', $inputs['user_id']);
@@ -147,12 +135,6 @@
         public function destroy($id) {
             $req = $this->db->prepare('DELETE from saisons WHERE id=:id LIMIT 1');
             $req->bindParam(':id', $id);
-            return $req;
-        }
-
-        public function delete_saison_genre($saison_id) {
-            $req = $this->db->prepare('DELETE from genre_saison WHERE saison_id=:saison_id');
-            $req->bindParam(':saison_id', $saison_id);
             return $req;
         }
     }

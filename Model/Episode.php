@@ -38,6 +38,13 @@
             return $req;
         }
 
+        public function new_episodes() {
+            $today = date('Y-m-d');
+            $req = $this->db->prepare('SELECT * from episodes WHERE release_date < :today && deleted = 0 && etat = 1 LIMIT 0, 12');
+            $req->bindParam(':today', $today);
+            return $req;
+        }
+
         public function save($inputs) {
             $req = $this->db->prepare('INSERT INTO episodes (title, slug, overview, realisateur, release_date, user_id, serie_id, saison_id, deleted, etat, created_at, updated_at)VALUES(:title, :slug, :overview, :realisateur, :release_date, :user_id, :serie_id, :saison_id, :deleted, :etat, NOW(), null)');
             $req->bindParam(':title', $inputs['title']);

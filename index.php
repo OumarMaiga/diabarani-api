@@ -175,6 +175,21 @@
         case 'serie-genres':
             $serie->serie_genres($_GET['serie_id']);
             break;
+        case 'new-series':
+            $serie->new_series();
+            break;
+        case 'upcoming-series':
+            $serie->upcoming();
+            break;
+        case 'genre-series':
+            $serie->genre_series($_GET['genre_id']);
+            break;
+        case 'genres-series':
+            $serie->genres_series();
+            break;
+        case 'some-genres-series':
+            $serie->some_genres_series($_GET['genre_ids']);
+            break;
 
         //////////////////// Saison ////////////////////
         case 'saison':
@@ -201,8 +216,11 @@
         case 'update-saison':
             $saison->update($_GET['id']);
             break;
-        case 'saison-genres':
-            $saison->saison_genres($_GET['saison_id']);
+        case 'new-saisons':
+            $saison->new_saisons();
+            break;
+        case 'upcoming-saisons':
+            $saison->upcoming();
             break;
 
         //////////////////// Episode ////////////////////
@@ -229,6 +247,12 @@
             break;
         case 'update-episode':
             $episode->update($_GET['id']);
+            break;
+        case 'new-episodes':
+            $episode->new_episodes();
+            break;
+        case 'upcoming-episodes':
+            $episode->upcoming();
             break;
 
         //////////////////// Film ////////////////////
@@ -259,10 +283,10 @@
         case 'film-genres':
             $film->film_genres($_GET['film_id']);
             break;
-        case 'new-film':
-            $film->new_film();
+        case 'new-films':
+            $film->new_films();
             break;
-        case 'upcoming-film':
+        case 'upcoming-films':
             $film->upcoming();
             break;
         case 'genre-films':

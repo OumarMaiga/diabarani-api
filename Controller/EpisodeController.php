@@ -3,13 +3,19 @@
     namespace Controller;
 
     use Model\Episode;
+    use Model\Serie;
+    use Model\Saison;
 
     class EpisodeController {
         
         private $episode;
+        private $serie;
+        private $saison;
         
         public function __construct() {
             $this->episode = new Episode();
+            $this->serie = new Serie();
+            $this->saison = new Saison();
         }
         
         public function get($serie_id, $saison_id) {
@@ -20,9 +26,32 @@
             $request = $this->episode->get($serie_id, $saison_id);
 
             if ($request->execute()) {
+                $episodes = $request->fetchAll();
+                // On recupere la serie de chaque episode
+                $i = -1;
+                foreach ($episodes as $episode)
+                {
+                    $i++;
+                    // On recupere les series de chaque episode
+                    $episodes[$i]['serie'] = array();
+                    $request = $this->serie->getById($episode['serie_id']);
+                    if ($request->execute()) 
+                    {
+                        $serie = $request->fetch();
+                        array_push($episodes[$i]['serie'], $serie);
+                    }
+                    // On recupere les saisons de chaque episode
+                    $episodes[$i]['saison'] = array();
+                    $request = $this->saison->getById($episode['saison_id']);
+                    if ($request->execute()) 
+                    {
+                        $saison = $request->fetch();
+                        array_push($episodes[$i]['saison'], $saison);
+                    }
+                }
                 $code = 1;
                 $message = "Episodes fetched";
-                $episodes = $request->fetchAll();
+                $episodes = $episodes;
             } else {
                 $message = "Episode not fetched";
                 $error_code = 'episodes_not_fetched';
@@ -47,9 +76,32 @@
             $request = $this->episode->getAll($serie_id, $saison_id);
 
             if ($request->execute()) {
+                $episodes = $request->fetchAll();
+                // On recupere la serie de chaque episode
+                $i = -1;
+                foreach ($episodes as $episode)
+                {
+                    $i++;
+                    // On recupere les series de chaque episode
+                    $episodes[$i]['serie'] = array();
+                    $request = $this->serie->getById($episode['serie_id']);
+                    if ($request->execute()) 
+                    {
+                        $serie = $request->fetch();
+                        array_push($episodes[$i]['serie'], $serie);
+                    }
+                    // On recupere les saisons de chaque episode
+                    $episodes[$i]['saison'] = array();
+                    $request = $this->saison->getById($episode['saison_id']);
+                    if ($request->execute()) 
+                    {
+                        $saison = $request->fetch();
+                        array_push($episodes[$i]['saison'], $saison);
+                    }
+                }
                 $code = 1;
                 $message = "Episodes fetched";
-                $episodes = $request->fetchAll();
+                $episodes = $episodes;
             } else {
                 $message = "Episode not fetched";
                 $error_code = 'episodes_not_fetched';
@@ -93,6 +145,109 @@
             );
             return;
         } 
+        
+        public function new_episodes() {
+            $code = 0;
+            $error_code = null;
+            $message = null;
+            $episodes = null;
+
+            $request = $this->episode->new_episodes();
+
+            if ($request->execute()) {
+                $episodes = $request->fetchAll();
+                // On recupere la serie de chaque episode
+                $i = -1;
+                foreach ($episodes as $episode)
+                {
+                    $i++;
+                    // On recupere les series de chaque episode
+                    $episodes[$i]['serie'] = array();
+                    $request = $this->serie->getById($episode['serie_id']);
+                    if ($request->execute()) 
+                    {
+                        $serie = $request->fetch();
+                        array_push($episodes[$i]['serie'], $serie);
+                    }
+                    // On recupere les saisons de chaque episode
+                    $episodes[$i]['saison'] = array();
+                    $request = $this->saison->getById($episode['saison_id']);
+                    if ($request->execute()) 
+                    {
+                        $saison = $request->fetch();
+                        array_push($episodes[$i]['saison'], $saison);
+                    }
+                }
+
+                $code = 1;
+                $message = "episodes fetched";
+                $episodes = $episodes;
+            } else {
+                $message = "episode not fetched";
+                $error_code = 'episodes_not_fetched';
+            }
+            
+            echo json_encode(
+                array(
+                    'code' => $code,
+                    'message' => $message,
+                    'error_code' => $error_code,
+                    'episodes' => $episodes
+                )
+            );
+            return;
+        }
+
+        public function upcoming() {
+            $code = 0;
+            $error_code = null;
+            $message = null;
+            $episodes = null;
+
+            $request = $this->episode->getBy('release_date', '>', date('Y-m-d'));
+
+            if ($request->execute()) {
+                $episodes = $request->fetchAll();
+                // On recupere la serie de chaque episode
+                $i = -1;
+                foreach ($episodes as $episode)
+                {
+                    $i++;
+                    // On recupere les series de chaque episode
+                    $episodes[$i]['serie'] = array();
+                    $request = $this->serie->getById($episode['serie_id']);
+                    if ($request->execute()) 
+                    {
+                        $serie = $request->fetch();
+                        array_push($episodes[$i]['serie'], $serie);
+                    }
+                    // On recupere les saisons de chaque episode
+                    $episodes[$i]['saison'] = array();
+                    $request = $this->saison->getById($episode['saison_id']);
+                    if ($request->execute()) 
+                    {
+                        $saison = $request->fetch();
+                        array_push($episodes[$i]['saison'], $saison);
+                    }
+                }
+                $code = 1;
+                $message = "episodes fetched";
+                $episodes = $episodes;
+            } else {
+                $message = "episode not fetched";
+                $error_code = 'episodes_not_fetched';
+            }
+
+            echo json_encode(
+                array(
+                    'code' => $code,
+                    'message' => $message,
+                    'error_code' => $error_code,
+                    'episodes' => $episodes
+                )
+            );
+            return;
+        }
 
         public function store($serie_id, $saison_id) {
             

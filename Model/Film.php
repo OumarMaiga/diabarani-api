@@ -97,12 +97,12 @@
 
         public function get_some_genres_films($genre_ids) {
             $today = date('Y-m-d');
-            $req = $this->db->prepare('SELECT film_genre.film_id as id, 
-                films.title as title, films.slug as slug, films.deleted as deleted 
+            $req = $this->db->prepare("SELECT film_genre.film_id as id, 
+                films.title as title, films.slug as slug, films.poster_path as poster_path, films.cover_path as cover_path,
+                films.video_path as video_path, films.deleted as deleted 
                 from film_genre 
                 LEFT JOIN films ON film_genre.film_id = films.id 
-                WHERE release_date < :today && film_genre.genre_id IN (:genre_ids) AND films.deleted = 0');
-            $req->bindParam(':genre_ids', $genre_ids);
+                WHERE release_date < :today && film_genre.genre_id IN ($genre_ids) AND films.deleted = 0");
             $req->bindParam(':today', $today);
             return $req;
         }
@@ -196,7 +196,7 @@
             return $req;
         }
 
-        public function new_film() {
+        public function new_films() {
             $today = date('Y-m-d');
             $req = $this->db->prepare('SELECT * from films WHERE release_date < :today && deleted = 0 && etat = 1 LIMIT 0, 12');
             $req->bindParam(':today', $today);

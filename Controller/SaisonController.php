@@ -3,13 +3,16 @@
     namespace Controller;
 
     use Model\Saison;
+    use Model\Serie;
 
     class SaisonController {
         
         private $saison;
+        private $serie;
         
         public function __construct() {
             $this->saison = new Saison();
+            $this->serie = new Serie();
         }
         
         public function get($serie_id) {
@@ -20,9 +23,24 @@
             $request = $this->saison->get($serie_id);
 
             if ($request->execute()) {
+                $saisons = $request->fetchAll();
+                // On recupere la serie de chaque saison
+                $i = -1;
+                foreach ($saisons as $saison)
+                {
+                    $i++;
+                    // On recupere les series de chaque saison
+                    $saisons[$i]['serie'] = array();
+                    $request = $this->serie->getById($saison['serie_id']);
+                    if ($request->execute()) 
+                    {
+                        $serie = $request->fetch();
+                        array_push($saisons[$i]['serie'], $serie);
+                    }
+                }
                 $code = 1;
                 $message = "Saisons fetched";
-                $saisons = $request->fetchAll();
+                $saisons = $saisons;
             } else {
                 $message = "Saison not fetched";
                 $error_code = 'saisons_not_fetched';
@@ -47,9 +65,24 @@
             $request = $this->saison->getAll();
 
             if ($request->execute()) {
+                $saisons = $request->fetchAll();
+                // On recupere la serie de chaque saison
+                $i = -1;
+                foreach ($saisons as $saison)
+                {
+                    $i++;
+                    // On recupere les series de chaque saison
+                    $saisons[$i]['serie'] = array();
+                    $request = $this->serie->getById($saison['serie_id']);
+                    if ($request->execute()) 
+                    {
+                        $serie = $request->fetch();
+                        array_push($saisons[$i]['serie'], $serie);
+                    }
+                }
                 $code = 1;
                 $message = "Saisons fetched";
-                $saisons = $request->fetchAll();
+                $saisons = $saisons;
             } else {
                 $message = "Saison not fetched";
                 $error_code = 'saisons_not_fetched';
@@ -72,12 +105,20 @@
             $saison = null;
 
             $request = $this->saison->getById($id);
-            $request->execute();
 
-            if ($data = $request->fetch()) {
+            if ($request->execute()) {
+                $saison = $request->fetch();
+                // On recupere les series de chaque saison
+                $saison['serie'] = array();
+                $request = $this->serie->getById($saison['serie_id']);
+                if ($request->execute()) 
+                {
+                    $serie = $request->fetch();
+                    array_push($saison['serie'], $serie);
+                }
                 $code = 1;
                 $message = "Saison fetched";
-                $saison = $data;
+                $saison = $saison;
             } else {
                 $message = "Saison not fetched";
                 $error_code = 'saison_not_fetched';
@@ -92,34 +133,46 @@
                 )
             );
             return;
-        } 
+        }
 
-        /**
-         * Recuperation des genres du saison
-         */
-        public function saison_genres($saison_id) {
+        public function upcoming() {
             $code = 0;
             $error_code = null;
             $message = null;
-            $genres = null;
+            $saisons = null;
 
-            $request = $this->saison->get_saison_genres($saison_id);
+            $request = $this->saison->getBy('release_date', '>', date('Y-m-d'));
 
             if ($request->execute()) {
+                $saisons = $request->fetchAll();
+                // On recupere la serie de chaque saison
+                $i = -1;
+                foreach ($saisons as $saison)
+                {
+                    $i++;
+                    // On recupere les series de chaque saison
+                    $saisons[$i]['serie'] = array();
+                    $request = $this->serie->getById($saison['serie_id']);
+                    if ($request->execute()) 
+                    {
+                        $serie = $request->fetch();
+                        array_push($saisons[$i]['serie'], $serie);
+                    }
+                }
                 $code = 1;
-                $message = "Serie genres fetched";
-                $genres = $request->fetchAll();
+                $message = "saisons fetched";
+                $saisons = $saisons;
             } else {
-                $message = "Serie genres not fetched";
-                $error_code = 'saison_genres_not_fetched';
+                $message = "saison not fetched";
+                $error_code = 'saisons_not_fetched';
             }
 
-            echo json_encode (
-                array (
+            echo json_encode(
+                array(
                     'code' => $code,
                     'message' => $message,
                     'error_code' => $error_code,
-                    'genres' => $genres
+                    'saisons' => $saisons
                 )
             );
             return;
@@ -179,6 +232,53 @@
             );
             return;
         }
+        
+        public function new_saisons() {
+            $code = 0;
+            $error_code = null;
+            $message = null;
+            $saisons = null;
+
+            $request = $this->saison->new_saisons();
+
+            if ($request->execute()) {
+                $saisons = $request->fetchAll();
+                // On recupere la serie de chaque saison
+                $i = -1;
+                foreach ($saisons as $saison)
+                {
+                    $i++;
+                    // On recupere les series de chaque saison
+                    $saisons[$i]['series'] = array();
+                    $request = $this->serie->getById($saison['serie_id']);
+                    if ($request->execute()) 
+                    {
+                        $series = $request->fetchAll();
+                        foreach ($series as $serie)
+                        {
+                            array_push($saisons[$i]['series'], $serie);
+                        }
+                    }
+                }
+
+                $code = 1;
+                $message = "saisons fetched";
+                $saisons = $saisons;
+            } else {
+                $message = "saison not fetched";
+                $error_code = 'saisons_not_fetched';
+            }
+
+            echo json_encode(
+                array(
+                    'code' => $code,
+                    'message' => $message,
+                    'error_code' => $error_code,
+                    'saisons' => $saisons
+                )
+            );
+            return;
+        } 
 
         /**
          * Mise à jour du saison
@@ -214,19 +314,6 @@
                 $code = 1;
                 $message = "Saison saved";
                 $saison = $data['saison'];
-                if (isset($_POST['genre'])) {
-                    // On supprime les saison_genre qui existe
-                    $saison_genre_deleted = $this->saison->delete_saison_genre($id);
-                    if ($saison_genre_deleted->execute()) {
-                        foreach ($_POST['genre'] as $genre_id) {
-                            $inputs = array(
-                                'saison_id' => $saison['id'],
-                                'genre_id' => $genre_id
-                            );
-                            $this->saison->save_genre_saison($inputs);
-                        }
-                    }
-                }
             } else {
                 $message = "Saison unsaved";
                 $error_code = 'saison_unsaved';

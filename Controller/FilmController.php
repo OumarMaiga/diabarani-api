@@ -538,13 +538,13 @@
             return;
         }
         
-        public function new_film() {
+        public function new_films() {
             $code = 0;
             $error_code = null;
             $message = null;
             $films = null;
 
-            $request = $this->film->new_film();
+            $request = $this->film->new_films();
 
             if ($request->execute()) {
                 $films = $request->fetchAll();

@@ -35,10 +35,11 @@
         }
 
         public function save($inputs) {
-            $req = $this->db->prepare('INSERT INTO series (title, slug, overview, etat, deleted, user_id, created_at, updated_at)VALUES(:title, :slug, :overview, :etat, :deleted, :user_id, NOW(), null)');
+            $req = $this->db->prepare('INSERT INTO series (title, slug, overview, release_date, etat, deleted, user_id, created_at, updated_at)VALUES(:title, :slug, :overview, :release_date, :etat, :deleted, :user_id, NOW(), null)');
             $req->bindParam(':title', $inputs['title']);
             $req->bindParam(':slug', $inputs['slug']);
             $req->bindParam(':overview', $inputs['overview']);
+            $req->bindParam(':release_date', $inputs['release_date']);
             $req->bindParam(':etat', $inputs['etat']);
             $req->bindParam(':deleted', $inputs['deleted']);
             $req->bindParam(':user_id', $inputs['user_id']);
@@ -66,10 +67,11 @@
         }
 
         public function update($id, $inputs) {
-            $req = $this->db->prepare('UPDATE series SET title=:title, overview=:overview, etat=:etat, user_id=:user_id, updated_at=NOW() WHERE id=:id');
+            $req = $this->db->prepare('UPDATE series SET title=:title, overview=:overview, release_date=:release_date, etat=:etat, user_id=:user_id, updated_at=NOW() WHERE id=:id');
             $req->bindParam(':id', $id);
             $req->bindParam(':title', $inputs['title']);
             $req->bindParam(':overview', $inputs['overview']);
+            $req->bindParam(':release_date', $inputs['release_date']);
             $req->bindParam(':etat', $inputs['etat']);
             $req->bindParam(':user_id', $inputs['user_id']);
             $data['success'] = false;
@@ -116,6 +118,13 @@
             return $data;
         }
 
+        public function new_series() {
+            $today = date('Y-m-d');
+            $req = $this->db->prepare('SELECT * from series WHERE release_date < :today && deleted = 0 && etat = 1 LIMIT 0, 12');
+            $req->bindParam(':today', $today);
+            return $req;
+        }
+
         public function delete($id) {
             $req = $this->db->prepare('UPDATE series SET deleted=1, updated_at = NOW() WHERE id=:id');
             $req->bindParam(':id', $id);
@@ -131,6 +140,19 @@
             return $data;
         }
 
+        public function get_genre_series($genre_id) {
+            $today = date('Y-m-d');
+            $req = $this->db->prepare('SELECT genre_serie.serie_id as id, 
+                series.title as title, series.slug as slug, series.poster_path as poster_path, 
+                series.cover_path as cover_path, series.deleted as deleted 
+                from genre_serie 
+                LEFT JOIN series ON genre_serie.serie_id = series.id 
+                WHERE release_date < :today && genre_serie.genre_id=:genre_id AND series.deleted = 0');
+            $req->bindParam(':genre_id', $genre_id);
+            $req->bindParam(':today', $today);
+            return $req;
+        }
+
         public function get_serie_genres($serie_id) {
             $req = $this->db->prepare('SELECT genre_serie.genre_id as id, 
                 genres.libelle as libelle, genres.slug as slug, genres.deleted as deleted 
@@ -138,6 +160,18 @@
                 LEFT JOIN genres ON genre_serie.genre_id = genres.id 
                 WHERE genre_serie.serie_id=:serie_id AND genres.deleted = 0');
             $req->bindParam(':serie_id', $serie_id);
+            return $req;
+        }
+
+        public function get_some_genres_series($genre_ids) {
+            $today = date('Y-m-d');
+            $req = $this->db->prepare("SELECT genre_serie.serie_id as id, 
+                series.title as title, series.slug as slug, series.poster_path as poster_path, 
+                series.cover_path as cover_path, series.deleted as deleted 
+                from genre_serie 
+                LEFT JOIN series ON genre_serie.serie_id = series.id 
+                WHERE release_date < :today && genre_serie.genre_id IN ($genre_ids) AND series.deleted = 0");
+            $req->bindParam(':today', $today);
             return $req;
         }
 
