@@ -295,7 +295,7 @@
                 $error_code = 'episode_unsaved';
             }
 
-                echo json_encode(
+            echo json_encode(
                 array(
                     'code' => $code,
                     'message' => $message,

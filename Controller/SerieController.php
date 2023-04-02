@@ -109,12 +109,23 @@
             $serie = null;
 
             $request = $this->serie->getById($id);
-            $request->execute();
 
-            if ($data = $request->fetch()) {
+            if ($request->execute()) {
+                $serie = $request->fetch();
+                // On recupere les genres de chaque serie
+                $serie['genres'] = array();
+                $request = $this->serie->get_serie_genres($serie['id']);
+                if ($request->execute()) 
+                {
+                    $genres = $request->fetchAll();
+                    foreach ($genres as $genre)
+                    {
+                        array_push($serie['genres'], $genre);
+                    }
+                }
                 $code = 1;
                 $message = "Serie fetched";
-                $serie = $data;
+                $serie = $serie;
             } else {
                 $message = "Serie not fetched";
                 $error_code = 'serie_not_fetched';
