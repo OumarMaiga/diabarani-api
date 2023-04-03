@@ -124,12 +124,39 @@
             $episode = null;
 
             $request = $this->episode->getById($id);
-            $request->execute();
 
-            if ($data = $request->fetch()) {
+            if ($request->execute()) {
+                $episode = $request->fetch();
+                    // On recupere la serie de l'episode
+                    $episode['serie'] = array();
+                    $request = $this->serie->getById($episode['serie_id']);
+                    if ($request->execute()) 
+                    {
+                        $serie = $request->fetch();
+                        // On recupere les genres de chaque serie
+                        $serie['genres'] = array();
+                        $request = $this->serie->get_serie_genres($serie['id']);
+                        if ($request->execute()) 
+                        {
+                            $genres = $request->fetchAll();
+                            foreach ($genres as $genre)
+                            {
+                                array_push($serie['genres'], $genre);
+                            }
+                        }
+                        array_push($episode['serie'], $serie);
+                    }
+                    // On recupere la saison de l'episode
+                    $episode['saison'] = array();
+                    $request = $this->saison->getById($episode['saison_id']);
+                    if ($request->execute()) 
+                    {
+                        $saison = $request->fetch();
+                        array_push($episode['saison'], $saison);
+                    }
                 $code = 1;
                 $message = "Episode fetched";
-                $episode = $data;
+                $episode = $episode;
             } else {
                 $message = "Episode not fetched";
                 $error_code = 'episode_not_fetched';
