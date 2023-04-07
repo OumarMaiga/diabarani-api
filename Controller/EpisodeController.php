@@ -33,20 +33,20 @@
                 {
                     $i++;
                     // On recupere les series de chaque episode
-                    $episodes[$i]['serie'] = array();
+                    $episodes[$i]['serie'] = null;
                     $request = $this->serie->getById($episode['serie_id']);
                     if ($request->execute()) 
                     {
                         $serie = $request->fetch();
-                        array_push($episodes[$i]['serie'], $serie);
+                        $episodes[$i]['serie'] = $serie;
                     }
                     // On recupere les saisons de chaque episode
-                    $episodes[$i]['saison'] = array();
+                    $episodes[$i]['saison'] = null;
                     $request = $this->saison->getById($episode['saison_id']);
                     if ($request->execute()) 
                     {
                         $saison = $request->fetch();
-                        array_push($episodes[$i]['saison'], $saison);
+                        $episodes[$i]['saison'] = $saison;
                     }
                 }
                 $code = 1;
@@ -83,20 +83,20 @@
                 {
                     $i++;
                     // On recupere les series de chaque episode
-                    $episodes[$i]['serie'] = array();
+                    $episodes[$i]['serie'] = null;
                     $request = $this->serie->getById($episode['serie_id']);
                     if ($request->execute()) 
                     {
                         $serie = $request->fetch();
-                        array_push($episodes[$i]['serie'], $serie);
+                        $episodes[$i]['serie'] = $serie;
                     }
                     // On recupere les saisons de chaque episode
-                    $episodes[$i]['saison'] = array();
+                    $episodes[$i]['saison'] = null;
                     $request = $this->saison->getById($episode['saison_id']);
                     if ($request->execute()) 
                     {
                         $saison = $request->fetch();
-                        array_push($episodes[$i]['saison'], $saison);
+                        $episodes[$i]['saison'] = $saison;
                     }
                 }
                 $code = 1;
@@ -128,7 +128,7 @@
             if ($request->execute()) {
                 $episode = $request->fetch();
                     // On recupere la serie de l'episode
-                    $episode['serie'] = array();
+                    $episode['serie'] = null;
                     $request = $this->serie->getById($episode['serie_id']);
                     if ($request->execute()) 
                     {
@@ -144,15 +144,15 @@
                                 array_push($serie['genres'], $genre);
                             }
                         }
-                        array_push($episode['serie'], $serie);
+                        $episode['serie'] = $serie;
                     }
                     // On recupere la saison de l'episode
-                    $episode['saison'] = array();
+                    $episode['saison'] = null;
                     $request = $this->saison->getById($episode['saison_id']);
                     if ($request->execute()) 
                     {
                         $saison = $request->fetch();
-                        array_push($episode['saison'], $saison);
+                        $episode['saison'] = $saison;
                     }
                 $code = 1;
                 $message = "Episode fetched";
@@ -189,20 +189,20 @@
                 {
                     $i++;
                     // On recupere les series de chaque episode
-                    $episodes[$i]['serie'] = array();
+                    $episodes[$i]['serie'] = null;
                     $request = $this->serie->getById($episode['serie_id']);
                     if ($request->execute()) 
                     {
                         $serie = $request->fetch();
-                        array_push($episodes[$i]['serie'], $serie);
+                        $episodes[$i]['serie'] = $serie;
                     }
                     // On recupere les saisons de chaque episode
-                    $episodes[$i]['saison'] = array();
+                    $episodes[$i]['saison'] = null;
                     $request = $this->saison->getById($episode['saison_id']);
                     if ($request->execute()) 
                     {
                         $saison = $request->fetch();
-                        array_push($episodes[$i]['saison'], $saison);
+                        $episodes[$i]['saison'] = $saison;
                     }
                 }
 
@@ -241,20 +241,20 @@
                 {
                     $i++;
                     // On recupere les series de chaque episode
-                    $episodes[$i]['serie'] = array();
+                    $episodes[$i]['serie'] = null;
                     $request = $this->serie->getById($episode['serie_id']);
                     if ($request->execute()) 
                     {
                         $serie = $request->fetch();
-                        array_push($episodes[$i]['serie'], $serie);
+                        $episodes[$i]['serie'] = $serie;
                     }
                     // On recupere les saisons de chaque episode
-                    $episodes[$i]['saison'] = array();
+                    $episodes[$i]['saison'] = null;
                     $request = $this->saison->getById($episode['saison_id']);
                     if ($request->execute()) 
                     {
                         $saison = $request->fetch();
-                        array_push($episodes[$i]['saison'], $saison);
+                        $episodes[$i]['saison'] = $saison;
                     }
                 }
                 $code = 1;
