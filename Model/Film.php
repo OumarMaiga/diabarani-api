@@ -86,7 +86,8 @@
         public function get_genre_films($genre_id) {
             $today = date('Y-m-d');
             $req = $this->db->prepare('SELECT film_genre.film_id as id, 
-                films.title as title, films.slug as slug, films.deleted as deleted 
+                films.title as title, films.poster_path as poster_path, films.cover_path as cover_path, 
+                films.video_path as video_path, films.slug as slug, films.deleted as deleted 
                 from film_genre 
                 LEFT JOIN films ON film_genre.film_id = films.id 
                 WHERE release_date < :today && film_genre.genre_id=:genre_id AND films.deleted = 0');
