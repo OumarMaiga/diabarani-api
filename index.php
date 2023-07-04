@@ -18,6 +18,8 @@
     use Controller\SerieController;
     use Controller\SaisonController;
     use Controller\EpisodeController;
+    use Controller\VueController;
+    use Controller\LikeController;
     /*use \Router;*/
 
     $auth = new AuthController();
@@ -30,6 +32,8 @@
     $serie = new SerieController();
     $saison = new SaisonController();
     $episode = new EpisodeController();
+    $vue = new VueController();
+    $like = new LikeController();
     
     /*header("Access-Control-Allow-Origin: *");
     header("Content-Type: application/json; charset=UTF-8");
@@ -319,7 +323,23 @@
         case 'destroy-historique':
             $historique->destroy($_GET['id']);
             break;
-            
+
+        //////////////////// Vue ////////////////////
+        case 'vues':
+            $vue->get($_GET['entite'], $_GET['id']);
+            break;
+        case 'store-vue':
+            $vue->store();
+            break;
+
+        //////////////////// Like ////////////////////
+        case 'likes':
+            $like->get($_GET['entite'], $_GET['id']);
+            break;
+        case 'store-like':
+            $like->store();
+            break;
+
         default:
             echo"wrong url";
     }
